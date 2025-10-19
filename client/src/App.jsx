@@ -109,7 +109,7 @@ function App() {
                         <span className="material-symbols-rounded">close</span>
                     </button>
                     <button className="visibility" onClick={toggleHiddenState}>
-                        <span className="material-symbols-rounded">visibility_off</span>
+                        <span className="material-symbols-rounded">visibility</span>
                     </button>
                     <button className="shuffle" onClick={() => setImgArr(shuffle(imgArr))}>
                         <span className="material-symbols-rounded">shuffle</span>
