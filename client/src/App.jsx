@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 function App() {
     const shakeSensitivity = import.meta.env.VITE_SHAKE_SENSITIVITY;
@@ -91,6 +91,10 @@ function App() {
             sessionStorage.setItem("hidden", "true");
         }
     };
+
+    useEffect(() => {
+        window.addEventListener("handlemotion", handleMotion);
+    }, []);
     return (
         <>
             {rootURL ? (
