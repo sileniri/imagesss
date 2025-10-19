@@ -1,6 +1,7 @@
 import {useState} from "react";
 
 function App() {
+    const shakeSensitivity = import.meta.env.VITE_SHAKE_SENSITIVITY;
     const initialArr = [
         "672.jpeg",
         "6426.png",
@@ -75,6 +76,20 @@ function App() {
         const url = formData.get("url");
         setRootURL(urlType + url);
         localStorage.setItem("rootURL", urlType + url);
+    };
+
+    const handleMotion = (evt) => {
+        const x = evt.accelerationIncludingGravity.x;
+        const y = evt.accelerationIncludingGravity.y;
+        const z = evt.accelerationIncludingGravity.z;
+
+        const acceleration = Math.sqrt(x * x + y * y + z * z);
+
+        if (acceleration > shakeSensitivity) {
+            console.log("SHAKE!!!");
+            setHiddenState(true);
+            sessionStorage.setItem("hidden", "true");
+        }
     };
     return (
         <>
