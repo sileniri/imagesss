@@ -93,7 +93,7 @@ function App() {
     };
 
     useEffect(() => {
-        window.addEventListener("handlemotion", handleMotion);
+        window.addEventListener("devicemotion", handleMotion);
     }, []);
     return (
         <>
