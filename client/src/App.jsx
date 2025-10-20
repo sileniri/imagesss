@@ -65,6 +65,7 @@ function App() {
         .map((value) => ({value, sort: Math.random()}))
         .sort((a, b) => a.sort - b.sort)
         .map(({value}) => value);
+        window.scrollTo(0, 0);
         return newArr;
     };
     const [imgArr, setImgArr] = useState(shuffle(initialArr));
