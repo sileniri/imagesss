@@ -4,6 +4,8 @@ function App() {
     const shakeSensitivity = import.meta.env.VITE_SHAKE_SENSITIVITY;
     const initialArr = [
         "672.jpeg",
+        "2846.jpeg",
+        "103.png",
         "6426.png",
         "5857.jpeg",
         "3998.jpeg",
