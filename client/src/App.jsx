@@ -16,7 +16,6 @@ function App() {
         "1349.jpeg",
         "7558.png",
         "6310.jpeg",
-        "4377.jpeg",
         "3462.jpeg",
         "6774.png",
         "7446.png",
