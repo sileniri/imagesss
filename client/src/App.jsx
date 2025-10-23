@@ -2,7 +2,10 @@ import {useEffect, useState} from "react";
 
 function App() {
     const shakeSensitivity = import.meta.env.VITE_SHAKE_SENSITIVITY;
-    const initialArr = [
+    const caoc = [
+        "rd-d/ALs6j_Hga8sHbvQ14YRHpZDIgR6Olr32oX-MgZ8ApHFlHzQ0-5WopOEEjS3HEtyuAI740AmVFE1JCfQ3hVPp8WhAecw6Njj89tT5S9aNTzINbgfNPPwaelxvif-NGaWdG-U0MzpIH-Z_EGfWkHGl63sSse6pt4Mc64gSKRAYVN44FiHCewaRI7Zks5EDw8BCcx6MU_JsGFioXmUr5qxT0n3V08q8kgfblK3vssNbw2tMX6_F23XHmOvFYWzxCHYYuye8e-V40--6PSQeOpT4tw85ImrcI2N9FzafU2EoA2SLnUU56S2W5hTM6ghhlSbwExDHjmFpwlxce75DrRVQAu8HY1t9r-bhupTHJNKGR-40hYYs8UYwyG6uGrBiTnTi0NjqczC7Czcokf5GnV5_gTxQobaVR2L3G7eZQKj1rswQPCFJfTFCNt8rrJWc_mf_woYZFrfCSaqE5u-TSn8FsuhcBllrtWXbkY1o9fnZcgxfqI_08ZIBdoSHDHEtP9Vkws9PZohr_t1sjZaj_6pv0VtOvLh4101Pye0Y7Nl9vByyfmVDi6e4H0415RyMdYWmDW36Hfk-dD5AUcbXma4c7fbb7m9UXSiBerzNr7_dLYnkQAwewAdCufCW0GVRhawzEN27rfytitq7E6XyWY_HXHOBlWD82PLHAWTjJEC88eI3DxnWNTi-78HtSFgSL7oVJEeir8Uv4dKFocYtaGgCdgBTCk65Zun4QiF9KswURm9PlUrXostyvYfHi7eMzAS13-0p-hVXBQm1WU5ZykKbV1o8v9EVG7z9SQrTrh-lm6Z-cWLQK1Nse54IU9Kdc6hKN3ixEMrssjPrnQoKg4_Mz69-xxJuPcuEwEOKts_lFNlFp6igO9TTH2Hzp-8KCe9DHA659hQh8D3Msu283MIG4mA_l5MgIXbNvecYMgiee5AC1fYNf4EaIm551pcCW3WinBxBDd6YhJpfyYiUbFOIWN-s6oya344hqHIXslDInJTOiYlXvkPMNDmppVctHhWsHPu-oRRuqD3lzOH28qWw1ClGxtAxGZ7A_-zGwVgzgl38Ow--Uy0o=w2880-h1462?auditContext=prefetch",
+    ];
+    const fict = [
         "672.jpeg",
         "6426.png",
         "5857.jpeg",
@@ -57,6 +60,8 @@ function App() {
         "7911.jpg",
         "5946.png",
     ];
+    const [rootURL, setRootURL] = useState(localStorage.getItem("rootURL"));
+    const [initialArr, setInitialArr] = useState(fict);
     const shuffle = (arr) => {
         const newArr = arr
         .map((value) => ({value, sort: Math.random()}))
@@ -65,7 +70,6 @@ function App() {
         return newArr;
     };
     const [imgArr, setImgArr] = useState(shuffle(initialArr));
-    const [rootURL, setRootURL] = useState(localStorage.getItem("rootURL"));
     const [hiddenState, setHiddenState] = useState(sessionStorage.getItem("hidden") !== "false");
     const toggleHiddenState = () => {
         sessionStorage.setItem("hidden", !hiddenState);
