@@ -111,9 +111,9 @@ function App() {
         document.addEventListener("scroll", () => {
             let height =
                 window.scrollY / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
-            height = Math.floor(height * 100);
+            height = height * 100;
             console.log(height);
-            if (height === 100) {
+            if ((height || Math.floor(height)) === 100) {
                 setImgArr(shuffle());
             }
         });
