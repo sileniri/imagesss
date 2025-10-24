@@ -113,7 +113,7 @@ function App() {
                 window.scrollY / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
             height = height * 100;
             console.log(height);
-            if ((height || Math.floor(height)) === 100) {
+            if (height + 0.3 >= 100) {
                 setImgArr(shuffle());
             }
         });
