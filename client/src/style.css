@@ -5,6 +5,10 @@
     transition: all 75ms;
 }
 
+.oh-no {
+    background-color: aqua;
+}
+
 body {
     min-height: 100vh;
 
@@ -24,6 +28,7 @@ body:has(.hidden) {
 }
 
 div:has(img) {
+    padding-top: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
