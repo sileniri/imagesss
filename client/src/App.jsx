@@ -59,11 +59,20 @@ function App() {
         "7684.jpg",
         "7911.jpg",
         "5946.png",
+        "6330.jpeg",
+        "1050.jpeg",
+        "3891.jpeg",
+        "4673.png",
+        "2331.jpeg",
+        "4226.jpeg",
+        "2561.jpeg",
+        "5563.jpeg",
+        "7657.jpg",
     ];
     const [rootURL, setRootURL] = useState(localStorage.getItem("rootURL"));
     const [initialArr, setInitialArr] = useState(fict);
     const shuffle = () => {
-        const transitionImgs = JSON.parse(localStorage.getItem("transImgs"));
+        const transitionImgs = JSON.parse(sessionStorage.getItem("transImgs"));
         let newArr = initialArr
         .map((value) => ({value, sort: Math.random()}))
         .sort((a, b) => a.sort - b.sort)
@@ -112,16 +121,23 @@ function App() {
             let height =
                 window.scrollY / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
             height = height * 100;
-            console.log(height);
+            // console.log(height);
             if (height + 0.3 >= 100) {
                 setImgArr(shuffle());
             }
+        });
+        window.addEventListener("focus", () => {
+            setHiddenState(sessionStorage.getItem("hidden") !== "false");
+        });
+        window.addEventListener("blur", () => {
+            setHiddenState(true);
         });
     }, []);
 
     useEffect(() => {
         const elem = document.querySelector("img + img");
         elem ? elem.scrollIntoView({behavior: "auto", block: "end"}) : null;
+        scrollBy(0, -Math.abs((document.body.scrollHeight / 100) * 0.3));
     }, [imgArr]);
 
     return (
@@ -162,7 +178,7 @@ function App() {
                                 const transImgs = [imgArr[index], imgArr[index - 1]];
                                 console.log("transImgs", transImgs);
 
-                                localStorage.setItem("transImgs", JSON.stringify(transImgs));
+                                sessionStorage.setItem("transImgs", JSON.stringify(transImgs));
                             }
                             return <img key={index} src={`${rootURL}/${imgSrc}`} loading="lazy" />;
                         })}
