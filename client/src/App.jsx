@@ -103,7 +103,7 @@ function App() {
         const initArr = formData.get("initArr");
         setRootURL(urlType + url);
         localStorage.setItem("rootURL", urlType + url);
-        setInitialArr(initArr);
+        setInitialArr(eval(initArr));
         localStorage.setItem("initArr", initArr);
     };
 
