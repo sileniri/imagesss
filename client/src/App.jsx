@@ -70,7 +70,7 @@ function App() {
         "7657.jpg",
     ];
     const top8 = ["7755.jpg", "1009.jpeg", "3792.jpg", "6426.png", "6310.jpeg", "4226.jpeg", "2561.jpeg", "6991.jpg"];
-    const [initialArr, setInitialArr] = useState(eval(localStorage.getItem("initArr")));
+    const [initialArr, setInitialArr] = useState(localStorage.getItem("initArr") === "top8" ? top8 : fict);
     const [rootURL, setRootURL] = useState(localStorage.getItem("rootURL"));
     const shuffle = () => {
         console.log(initialArr.length);
@@ -103,7 +103,7 @@ function App() {
         const initArr = formData.get("initArr");
         setRootURL(urlType + url);
         localStorage.setItem("rootURL", urlType + url);
-        setInitialArr(eval(initArr));
+        setInitialArr(initArr === "top8" ? top8 : fict);
         localStorage.setItem("initArr", initArr);
     };
 
