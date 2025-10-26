@@ -95,7 +95,7 @@ form {
         text-align: center;
 
         &:not(button) {
-            width: 0;
+            flex-basis: 0;
             flex-grow: 1;
         }
         &:is(input) {
@@ -105,5 +105,8 @@ form {
     & span {
         display: flex;
         gap: var(--_gap);
+    }
+    & > * {
+        max-height: 50px;
     }
 }

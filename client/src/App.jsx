@@ -69,25 +69,29 @@ function App() {
         "5563.jpeg",
         "7657.jpg",
     ];
+    const top8 = ["7755.jpg", "1009.jpeg", "3792.jpg", "6426.png", "6310.jpeg", "4226.jpeg", "2561.jpeg", "6991.jpg"];
+    const [initialArr, setInitialArr] = useState(eval(localStorage.getItem("initArr")));
     const [rootURL, setRootURL] = useState(localStorage.getItem("rootURL"));
-    const [initialArr, setInitialArr] = useState(fict);
     const shuffle = () => {
-        const transitionImgs = JSON.parse(sessionStorage.getItem("transImgs"));
-        let newArr = initialArr
-        .map((value) => ({value, sort: Math.random()}))
-        .sort((a, b) => a.sort - b.sort)
-        .map(({value}) => value);
-        console.log(transitionImgs);
+        console.log(initialArr.length);
+        if (initialArr.length > 4) {
+            const transitionImgs = JSON.parse(sessionStorage.getItem("transImgs"));
+            let newArr = initialArr
+            .map((value) => ({value, sort: Math.random()}))
+            .sort((a, b) => a.sort - b.sort)
+            .map(({value}) => value);
+            console.log(transitionImgs);
 
-        transitionImgs
-            ? transitionImgs.forEach((item) => {
-                  newArr.unshift(item);
-              })
-            : null;
-        console.log(transitionImgs, newArr);
-        return newArr;
+            transitionImgs
+                ? transitionImgs.forEach((item) => {
+                      newArr.unshift(item);
+                  })
+                : null;
+            console.log(transitionImgs, newArr);
+            return newArr;
+        }
     };
-    const [imgArr, setImgArr] = useState(shuffle());
+    const [imgArr, setImgArr] = useState(rootURL ? shuffle() : null);
     const [hiddenState, setHiddenState] = useState(sessionStorage.getItem("hidden") !== "false");
     const toggleHiddenState = () => {
         sessionStorage.setItem("hidden", !hiddenState);
@@ -96,8 +100,11 @@ function App() {
     const updateRootURL = (formData) => {
         const urlType = formData.get("urlType");
         const url = formData.get("url");
+        const initArr = formData.get("initArr");
         setRootURL(urlType + url);
         localStorage.setItem("rootURL", urlType + url);
+        setInitialArr(initArr);
+        localStorage.setItem("initArr", initArr);
     };
 
     const handleMotion = (evt) => {
@@ -194,6 +201,10 @@ function App() {
                             </select>
                             <input type="text" name="url" />
                         </span>
+                        <select name="initArr">
+                            <option value="fict">fict</option>
+                            <option value="top8">top8</option>
+                        </select>
                         <button type="submit">Set rootURL</button>
                     </form>
                 </>
