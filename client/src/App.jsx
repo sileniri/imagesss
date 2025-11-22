@@ -84,9 +84,17 @@ function App() {
     };
     const [imgArr, setImgArr] = useState(rootURL ? shuffle() : null);
     const [hiddenState, setHiddenState] = useState(sessionStorage.getItem("hidden") !== "false");
+    const [modeState, setModeState] = useState("");
+    const [fullscreen, setFullscreen] = useState(false);
     const toggleHiddenState = () => {
         sessionStorage.setItem("hidden", !hiddenState);
         setHiddenState(!hiddenState);
+    };
+    const toggleMode = () => {
+        modeState == "" ? setModeState("fixed") : setModeState("");
+    };
+    const toggleFullScreen = () => {
+        setFullscreen(!fullscreen);
     };
     const updateRootURL = (formData) => {
         const urlType = formData.get("urlType");
@@ -125,8 +133,8 @@ function App() {
                     // setImgArr(imgArr.concat(shuffle()));
                     const imgCont = document.querySelector("#imgContainer");
                     const imgs = shuffle();
-                    imgs.forEach((img) => {
-                        imgCont.innerHTML += `<img src="${rootURL}/${img}" loading="lazy" />`;
+                    imgs.forEach((imgSrc) => {
+                        imgCont.innerHTML += `<div class="img" style="--_url: url(${rootURL}/${imgSrc})"> <img src="${rootURL}/${imgSrc}" loading="lazy" /> </div>`;
                     });
                 }
             });
@@ -138,6 +146,10 @@ function App() {
             setHiddenState(true);
         });
     }, []);
+
+    useEffect(() => {
+        fullscreen ? document.body.requestFullscreen() : document.exitFullscreen();
+    }, [fullscreen]);
 
     return (
         <>
@@ -157,7 +169,7 @@ function App() {
                             width="24px"
                             fill="#e3e3e3"
                         >
-                            <path d="M480-385 302-207q-20 20-48 20t-47-20q-20-20-20-47.5t20-47.5l178-178-178-179q-20-20-20-47.5t20-47.5q19-20 47-20t48 20l178 178 178-178q20-20 48-20t47 20q20 20 20 47.5T753-659L575-480l178 178q20 20 20 47.5T753-207q-19 20-47 20t-48-20L480-385Z" />
+                            <path d="M480-392 300-212q-18 18-44 18t-44-18q-18-18-18-44t18-44l180-180-180-180q-18-18-18-44t18-44q18-18 44-18t44 18l180 180 180-180q18-18 44-18t44 18q18 18 18 44t-18 44L568-480l180 180q18 18 18 44t-18 44q-18 18-44 18t-44-18L480-392Z" />
                         </svg>
                     </button>
                     <button className="visibility" onClick={toggleHiddenState}>
@@ -168,12 +180,36 @@ function App() {
                             width="24px"
                             fill="#e3e3e3"
                         >
-                            <path d="M614-634q16 17 28.5 40t19.5 48q0 23.58-16 39.79T606-490q-23 0-39.5-16.21T550-546q1-7-1-13t-7.21-11q-5.2-4-11-6.5Q525-579 518-578q-22 0-38-16t-16-38q0-22 16-38t38-16q27 6 51 19t45 33Zm-134-88q-8.89 0-17.45 1-8.55 1-17.55 1-25 2-47-11.5T369-770q-6-24 7-45t37-24q17-2.44 33.5-3.22Q463-843 480-843q148 0 272 79t188 214q6 12 9 24.44 3 12.45 3 25.5 0 13.06-1.93 26.78T942-448q-17 34-38.5 65T856-324q-17 19-41.5 17T773-328q-16-19-14.5-44t17.5-44q17-20 31-40.5t26-43.5q-53.26-99.84-146.63-160.92Q593-722 480-722Zm0 565q-145.29 0-266.15-77Q93-311 27-440q-7-14-11-28.95t-4-31q0-16.05 3-31.55T25-562q18-36 41.37-67.94Q89.74-661.87 118-691l-70-71q-15-14.73-15-35.87Q33-819 48-835q15-15 36.5-15t36.5 15l699 699q15 15 14.5 36.5T820-64q-16 15-37 15t-36-15L628-181q-35 13-72.5 18.5T480-157ZM205-608q-23 25-42.18 51.89Q143.65-529.22 128-500q50.26 101.84 144.63 161.92Q367-278 480-278q12 0 24.5-1t24.5-3l-28-31q-6 1-11 1.5t-10 .5q-79 0-134-55t-55-134q0-5-.5-10t.5-11l-86-87Zm352 69Zm-191 94Z" />
+                            <path d="M607-627q15 15 27 36.5t19 44.5q0 22-15 37t-37 15q-22 0-37-15t-15-37q2-7 0-12.5t-7-10.5q-5-5-10.5-7.5T518-577q-20 0-34.5-15T469-627q0-20 14.5-34.5T518-676q25 5 47 17t42 32Zm-127-93q-10 0-19.5.5T441-718q-23 2-43-10t-26-35q-6-23 6-42t35-22q17-2 33.5-3t33.5-1q144 0 264.5 76.5T928-547q5 11 8 23t3 24q0 12-2 24.5t-7 23.5q-17 34-39 64.5T843-329q-15 17-37.5 15T768-333q-15-17-14-40t16-40q17-20 32-42t28-45q-52-100-145-160t-205-60Zm0 551q-140 0-257.5-74.5T39-443q-7-14-10.5-28T25-500q0-15 3-29.5T38-558q18-37 42.5-69.5T134-689l-73-73q-14-14-14-33t14-33q14-14 33.5-14t33.5 14l685 685q14 14 14 33t-14 33q-14 14-33 14t-33-14L630-193q-36 13-74 18.5t-76 5.5ZM213-613q-25 26-45 54t-37 59q50 101 143.5 160.5T480-280q15 0 30-1.5t30-3.5l-36-38q-6 2-12 2.5t-12 .5q-75 0-127.5-52.5T300-500v-12q0-6 1-12l-88-89Zm343 74Zm-180 90Z" />
                         </svg>
                     </button>
-                    <div id="imgContainer" className={hiddenState ? "hidden" : ""}>
+                    <button className="mode" onClick={toggleMode}>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24px"
+                            viewBox="0 -960 960 960"
+                            width="24px"
+                            fill="#e3e3e3"
+                        >
+                            <path d="m287-231 52 52q19 19 18.5 44.5T338-90q-19 18-45 18t-44-18L90-249q-9-9-13.5-21T72-294q0-12 4.5-23.5T90-338l159-159q18-18 43.5-18t44.5 18q19 18 19.5 44T338-408l-51 51h524q26 0 44.5 18.5T874-294q0 26-18.5 44.5T811-231H287Zm386-372H149q-26 0-44.5-18.5T86-666q0-26 18.5-44.5T149-729h524l-52-52q-19-19-18.5-44.5T622-870q19-18 45-18t44 18l159 159q9 9 13.5 21t4.5 24q0 12-4.5 23.5T870-622L711-463q-18 18-43.5 18T623-463q-19-18-19.5-44t18.5-45l51-51Z" />
+                        </svg>
+                    </button>
+                    <button className="fullscreen" onClick={toggleFullScreen}>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24px"
+                            viewBox="0 -960 960 960"
+                            width="24px"
+                            fill="#e3e3e3"
+                        >
+                            <path d="M212-212h71q26 0 44.5 18.5T346-149q0 26-18.5 44.5T283-86H149q-26 0-44.5-18.5T86-149v-134q0-26 18.5-44.5T149-346q26 0 44.5 18.5T212-283v71Zm536 0v-71q0-26 18.5-44.5T811-346q26 0 44.5 18.5T874-283v134q0 26-18.5 44.5T811-86H678q-26 0-44.5-18.5T615-149q0-26 18.5-44.5T678-212h70ZM212-748v70q0 26-18.5 44.5T149-615q-26 0-44.5-18.5T86-678v-133q0-26 18.5-44.5T149-874h134q26 0 44.5 18.5T346-811q0 26-18.5 44.5T283-748h-71Zm536 0h-70q-26 0-44.5-18.5T615-811q0-26 18.5-44.5T678-874h133q26 0 44.5 18.5T874-811v133q0 26-18.5 44.5T811-615q-26 0-44.5-18.5T748-678v-70Z" />
+                        </svg>
+                    </button>
+                    <div id="imgContainer" className={(hiddenState ? "hidden " : "") + modeState}>
                         {imgArr.map((imgSrc, index) => (
-                            <img key={index} src={`${rootURL}/${imgSrc}`} loading="lazy" />
+                            <div className="img" style={{"--_url": `url(${rootURL}/${imgSrc})`}}>
+                                <img key={index} src={`${rootURL}/${imgSrc}`} loading="lazy" />
+                            </div>
                         ))}
                     </div>
                 </>

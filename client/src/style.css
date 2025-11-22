@@ -22,20 +22,42 @@ body {
 
 body:has(.hidden) {
     background-color: #999;
-    & img {
+    & .img {
         opacity: 0;
     }
 }
 
-div:has(img) {
+#imgContainer {
     padding-top: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-img {
+.img {
+    position: relative;
     width: min(100%, 700px);
+}
+
+img {
+    width: 100%;
+}
+
+.img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    z-index: -1;
+    background-image: var(--_url);
+    background-size: cover;
+    background-size: contain;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.fixed img {
+    opacity: 0;
 }
 
 :not(form) > button {
@@ -63,14 +85,14 @@ img {
     &:not(.close) {
         right: var(--_margin);
     }
-    &.close {
+    &:is(.close, .fullscreen) {
         left: var(--_margin);
     }
     &:is(.visibility, .close) {
         top: var(--_margin);
     }
 
-    &.shuffle {
+    &:is(.mode, .fullscreen) {
         bottom: var(--_margin);
     }
 }
